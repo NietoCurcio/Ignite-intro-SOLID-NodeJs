@@ -1,0 +1,161 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Users API",
+    "description": "User API documentation.",
+    "version": "1.0.0",
+    "contact": {
+      "email": "felipe_nieto010@hotmail.com"
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "admin": { "type": "boolean" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "parameters": {
+      "userId": {
+        "name": "user_id",
+        "in": "path",
+        "description": "The id of a user",
+        "required": true
+      }
+    }
+  },
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": ["User"],
+        "description": "Lists all users",
+        "summary": "Lists all users",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "header",
+            "description": "The id of an admin user",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": ["User"],
+        "description": "Creates a user",
+        "summary": "Creates a user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": "string",
+                  "email": "string"
+                },
+                "example": {
+                  "name": "User name example",
+                  "email": "Useremail@example "
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["User"],
+        "description": "Returns a user",
+        "summary": "Returns a user",
+        "parameters": [{ "$ref": "#/components/parameters/userId" }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User does not exists"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["User"],
+        "description": "Turns a user into an admin",
+        "summary": "Turns a user into an admin",
+        "parameters": [{ "$ref": "#/components/parameters/userId" }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User does not exists"
+          }
+        }
+      }
+    }
+  }
+}
