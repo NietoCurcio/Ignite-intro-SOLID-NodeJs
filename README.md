@@ -19,8 +19,6 @@ class UsersService {
 
 "UsersService" determines the "usersRepository" dependency behavior by defining the "IUsersRepository" interface or contract, respecting that details should depend on abstractions.
 
-t determines the USERS dependency behavior by defining the UKLA interface or contract, maintaining that details should depend on abstractions.
-
 ## Liskov Substitution Principle (LSP)
 
 This principle says to build software systems from interchangeable parts that must adhere to a contract, which allows those parts substitutes for one another. For example, picturing that "usersRepository" needs to be modified to "mongoUsersRepository", when calling the "UsersService" constructor, it only has to pass the new object, and the application will not break since both "usersRepository" and "mongoUsersRepository" implements the IUsersRepository interface or contract.
